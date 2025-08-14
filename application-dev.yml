@@ -1,0 +1,281 @@
+gemini:
+  api-key: enter-you-gemini-api-key
+
+form-allowed-values:
+  job-titles:
+    - AI Data Curator
+    - AI Ethics Specialist
+    - AI Model Trainer
+    - AI Product Manager
+    - AI Research Scientist
+    - AI Solutions Architect
+    - AI Systems Reliability Engineer
+    - Application Designer
+    - Application Developer
+    - Application Engineer
+    - Application Support Analyst
+    - Artificial Intelligence Engineer
+    - Business Systems Analyst
+    - Chief Information Officer (CIO)
+    - Chief Technology Officer (CTO)
+    - Cloud Architect
+    - Cloud Computing Engineer
+    - Cloud Consultant
+    - Cloud Engineer
+    - Cloud Product Manager
+    - Cloud Services Developer
+    - Cloud Services Provider
+    - Cloud System Administrator
+    - Cloud Systems Engineer
+    - Computer And Information Research Manager
+    - Computer And Information Research Scientist
+    - Computer Data Scientist
+    - Computer Forensic Investigator
+    - Computer Network Specialist
+    - Computer Operator
+    - Computer Programmer
+    - Computer Support Specialist
+    - Computer Support Technician
+    - Computer Systems Analyst
+    - Computer Technician
+    - Computer Vision Engineer
+    - Cyber Security Manager
+    - Cyber Security Specialist
+    - Data Architect
+    - Data Modeler
+    - Data Quality Manager
+    - Data Scientist
+    - Database Administrator
+    - Database Analyst
+    - Database Coordinator
+    - Database Developer
+    - Database Engineer
+    - Database Manager
+    - Database Specialist
+    - Deep Learning Engineer
+    - Desktop Support Specialist
+    - Devops Engineer
+    - Director Of Technology
+    - Frameworks Specialist
+    - Front-End Designer
+    - Front-End Developer
+    - Full-Stack Developer
+    - Game Developer
+    - Generative AI Engineer
+    - Help Desk Analyst
+    - Help Desk Support
+    - Help Desk Technician
+    - Help Desk Worker
+    - Information Architect
+    - Information Management Systems Director
+    - Information Security Analyst
+    - Information Security Consultant
+    - Information Security Engineer
+    - Information Security Manager
+    - Information Security Program Manager
+    - Information Security Project Manager
+    - Information Security Specialist
+    - Information Technology Analyst
+    - Information Technology Leadership
+    - Interaction Designer
+    - Internet Engineer
+    - Iteration Manager
+    - It Coordinator
+    - It Director
+    - It Manager
+    - It Project Manager
+    - It Sales Director
+    - It Sales Executive
+    - It Security Analyst
+    - It Support Specialist
+    - It Technician
+    - Large Language Model Engineer
+    - Lead Programmer
+    - Machine Learning Engineer
+    - Management Information Director
+    - Mobile Developer
+    - Multimedia Architect
+    - Natural Language Processing (NLP) Engineer
+    - Network Administrator
+    - Network Analyst
+    - Network Architect
+    - Network Engineer
+    - Network Infrastructure Specialist
+    - Network Operations Engineer
+    - Network Reliability Engineer
+    - Network Security Engineer
+    - Network Technician
+    - Operations Analyst
+    - Problem Manager
+    - Prompt Engineer
+    - Prompt Optimization Specialist
+    - Reinforcement Learning Researcher
+    - Responsible AI Lead
+    - Search Engine Optimization (SEO) Consultant
+    - Security Specialist
+    - Senior It Consultant
+    - Senior Systems Analyst
+    - Seo Manager
+    - Software Architect
+    - Software Developer
+    - Software Development Engineer
+    - Software Development Manager
+    - Software Engineer
+    - Software Test Engineer
+    - Solutions Architect
+    - Speech Recognition Engineer
+    - Support Specialist
+    - Systems Analyst
+    - Systems Designer
+    - Technical Account Manager
+    - Technical Assistance Specialist
+    - Technical Lead
+    - Technical Operations Officer
+    - Technical Specialist
+    - Technical Support
+    - Technology Assistant
+    - Technology Manager
+    - Technology Sales Consultant
+    - Technology Specialist
+    - User Experience (UX) Designer
+    - User Interface (UI) Designer
+    - Ux/Ui Researcher
+    - Ux/Ui Specialist
+    - Web Analytics Developer
+    - Web Content Manager
+    - Web Designer
+    - Web Developer
+    - Web Development Manager
+    - Web Development Project Manager
+    - Web Engineer
+    - Web Producer
+    - Web Producers
+    - Web Project Manager
+    - Webmaster
+  locations:
+    - Etätyö
+    - Helsinki
+    - Espoo
+    - Tampere
+    - Vantaa
+    - Oulu
+    - Turku
+    - Jyväskylä
+    - Lahti
+    - Kuopio
+    - Kouvola
+    - Pori
+    - Joensuu
+    - Lappeenranta
+    - Hämeenlinna
+    - Vaasa
+    - Rovaniemi
+    - Seinäjoki
+    - Mikkeli
+    - Kotka
+    - Salo
+    - Porvoo
+    - Hyvinkää
+    - Järvenpää
+    - Kaarina
+    - Nurmijärvi
+    - Riihimäki
+    - Kerava
+    - Kemi
+    - Kajaani
+    - Savonlinna
+  industries:
+    - Ohjelmistokehitys
+    - IT-konsultointi
+    - Verkkopalvelut ja web-kehitys
+    - Kyberturvallisuus
+    - Pilvipalvelut (Cloud Computing)
+    - IT-tuki ja ylläpito
+    - Tekoäly ja koneoppiminen
+    - IT-rekrytointi ja henkilöstövuokraus
+  educations:
+    - Peruskoulu
+    - Ammatillinen perustutkinto
+    - Ylioppilas
+    - Ammattikorkeakoulututkinto
+    - Yliopistotutkinto
+    - Tohtorintutkinto
+  technologies:
+    - Angular
+    - Ansible
+    - Apache Hadoop
+    - Apache Kafka
+    - Apache Spark
+    - AWS
+    - Azure
+    - Bash
+    - Bootstrap
+    - C
+    - C#
+    - C++
+    - CSS
+    - Django
+    - Docker
+    - Elasticsearch
+    - Express.js
+    - Firebase
+    - Flutter
+    - Git
+    - Google Cloud Platform
+    - GraphQL
+    - Go
+    - HTML
+    - Ionic
+    - Java
+    - JavaScript
+    - Jenkins
+    - JIRA
+    - jQuery
+    - Julia
+    - Kubernetes
+    - Laravel
+    - Linux
+    - MariaDB
+    - MATLAB
+    - Memcached
+    - MongoDB
+    - MySQL
+    - Neo4j
+    - Node.js
+    - NoSQL
+    - SQL
+    - NUnit
+    - OpenShift
+    - Oracle DB
+    - PHP
+    - PostgreSQL
+    - Python
+    - RabbitMQ
+    - React
+    - Redis
+    - Ruby on RAIls
+    - Rust
+    - Salesforce
+    - Sass
+    - Selenium
+    - Shopify
+    - Sinatra
+    - Slack API
+    - Snowflake
+    - Solr
+    - Spark
+    - Spring Boot
+    - SQLite
+    - Swift
+    - Terraform
+    - TensorFlow
+    - TypeScript
+    - Unity
+    - Unreal Engine
+    - Vue.js
+    - WebAssembly
+    - Windows Server
+    - Xamarin
+    - XML
+    - YAML
+    - Zephyr
