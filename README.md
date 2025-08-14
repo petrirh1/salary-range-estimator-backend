@@ -34,13 +34,7 @@ This project is a backend service that estimates salary ranges for software deve
     gemini:
        api-key: your-api-key
     ```
-3.  Set the active Spring profile in `application.yml`:
-    ```yaml
-    spring:
-      profiles:
-        active: dev
-    ```
-4.  Run the application:
+3. Run the application with dev-profile:
     ```bash
-    mvn spring-boot:run
+    mvn spring-boot:run -Dspring-boot.run.profiles=dev
     ```
