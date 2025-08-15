@@ -12,12 +12,15 @@ import java.time.Duration;
 @Configuration
 public class WebClientConfig {
 
+    @Value("${gemini.base-url}")
+    private String geminiBaseUrl;
+
     @Value("${gemini.api-key}")
     private String geminiApiKey;
 
     @Bean
     public WebClient geminiWebClient(WebClient.Builder builder) {
-        return builder.baseUrl("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + geminiApiKey)
+        return builder.baseUrl(geminiBaseUrl + "?key=" + geminiApiKey)
                 .clientConnector(defaultConnector())
                 .build();
     }
