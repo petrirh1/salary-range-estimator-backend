@@ -46,6 +46,7 @@ public class SalaryService {
                     "**Neuvotteluvinkkejä:**\n\n" +
                     "Perustele palkkatoiveesi osaamisella ja kokemuksella. Korosta omaa arvoasi yritykselle palkkaneuvotteluissa.";
 
+    @Cacheable("salaryRangeResponse")
     public SalaryRangeResponse getSalaryRange(SalaryRangeRequest request) {
         GeminiRequest geminiRequest = generateGeminiRequest(request);
         GeminiResponse response = geminiWebClient.post()
