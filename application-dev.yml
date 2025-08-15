@@ -1,5 +1,10 @@
+cors:
+  allowed-origins: http://localhost:5173
+  allowed-methods: GET,POST
+
 gemini:
-  api-key: enter-you-gemini-api-key
+  base-url: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
+  api-key: your-api-key
 
 form-allowed-values:
   job-titles:
