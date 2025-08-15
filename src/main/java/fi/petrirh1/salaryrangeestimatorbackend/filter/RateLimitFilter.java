@@ -25,7 +25,7 @@ public class RateLimitFilter extends OncePerRequestFilter {
 
         String clientIp = request.getRemoteAddr();
         RateLimiter limiter = limiters.computeIfAbsent(clientIp,
-                key -> new RateLimiter(2, Duration.ofSeconds(5)));
+                key -> new RateLimiter(35, Duration.ofSeconds(5)));
 
         if (!limiter.allowRequest()) {
             response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
