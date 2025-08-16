@@ -197,7 +197,6 @@ form-allowed-values:
     - Pilvipalvelut (Cloud Computing)
     - IT-tuki ja ylläpito
     - Tekoäly ja koneoppiminen
-    - IT-rekrytointi ja henkilöstövuokraus
   educations:
     - Peruskoulu
     - Ammatillinen perustutkinto
@@ -206,81 +205,110 @@ form-allowed-values:
     - Yliopistotutkinto
     - Tohtorintutkinto
   technologies:
-    - Angular
-    - Ansible
-    - Apache Hadoop
-    - Apache Kafka
-    - Apache Spark
-    - AWS
-    - Azure
-    - Bash
-    - Bootstrap
-    - C
-    - C#
-    - C++
-    - CSS
-    - Django
-    - Docker
-    - Elasticsearch
-    - Express.js
-    - Firebase
-    - Flutter
-    - Git
-    - Google Cloud Platform
-    - GraphQL
-    - Go
-    - HTML
-    - Ionic
-    - Java
-    - JavaScript
-    - Jenkins
-    - JIRA
-    - jQuery
-    - Julia
-    - Kubernetes
-    - Laravel
-    - Linux
-    - MariaDB
-    - MATLAB
-    - Memcached
-    - MongoDB
-    - MySQL
-    - Neo4j
-    - Node.js
-    - NoSQL
-    - SQL
-    - NUnit
-    - OpenShift
-    - Oracle DB
-    - PHP
-    - PostgreSQL
     - Python
-    - RabbitMQ
-    - React
-    - Redis
-    - Ruby on RAIls
+    - Java
+    - C
+    - C++
+    - C#
+    - Go
     - Rust
-    - Salesforce
-    - Sass
-    - Selenium
-    - Shopify
-    - Sinatra
-    - Slack API
-    - Snowflake
-    - Solr
-    - Spark
-    - Spring Boot
-    - SQLite
+    - Kotlin
     - Swift
-    - Terraform
-    - TensorFlow
+    - Ruby
+    - Node.js
+    - JavaScript
     - TypeScript
+    - React
+    - Next.js
+    - Angular
+    - Vue.js
+    - Svelte
+    - Django
+    - Flask
+    - Spring
+    - Spring Boot
+    - .NET
+    - Laravel
+    - Express.js
+    - Tailwind CSS
+    - Bootstrap
+    - Material-UI
+    - Swift
+    - Kotlin
+    - Flutter
+    - React Native
+    - Xamarin
+    - Cordova
+    - MySQL
+    - PostgreSQL
+    - Oracle Database
+    - Microsoft SQL Server
+    - MongoDB
+    - Cassandra
+    - Redis
+    - CouchDB
+    - Git
+    - GitHub
+    - Bitbucket
+    - SVN
+    - Mercurial
+    - Jenkins
+    - GitLab CI
+    - CircleCI
+    - Travis CI
+    - Azure DevOps
+    - Selenium
+    - JUnit
+    - PyTest
+    - Cypress
+    - Postman
+    - AWS
+    - Microsoft Azure
+    - Google Cloud Platform
+    - IBM Cloud
+    - Oracle Cloud
+    - Docker
+    - Kubernetes
+    - OpenShift
+    - Nginx
+    - Apache
+    - HAProxy
+    - Ansible
+    - Puppet
+    - Chef
+    - Terraform
+    - Prometheus
+    - Grafana
+    - ELK Stack
+    - Datadog
+    - New Relic
+    - SSL/TLS
+    - AES
+    - RSA
+    - SHA-256
+    - OAuth
+    - OpenID Connect
+    - SAML
+    - LDAP
+    - Wireshark
+    - Metasploit
+    - Nessus
+    - Nmap
+    - TensorFlow
+    - PyTorch
+    - Keras
+    - Scikit-learn
+    - Pandas
+    - NumPy
+    - Matplotlib
+    - Seaborn
+    - GPT
+    - BERT
+    - spaCy
+    - Hugging Face Transformers
     - Unity
     - Unreal Engine
-    - Vue.js
-    - WebAssembly
-    - Windows Server
-    - Xamarin
-    - XML
-    - YAML
-    - Zephyr
+    - WebXR
+    - Mendix
+    - OutSystems
+    - PowerApps
