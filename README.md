@@ -16,6 +16,14 @@ This project is a backend service that estimates salary ranges for software deve
 *   Lombok
 *   Google Gemini API
 
+## Getting a Google Gemini API Key
+
+1.  Go to [Google AI Studio](https://aistudio.google.com/).
+2.  Sign in with your Google account.
+3.  Click on the "Get API key" button.
+4.  Create a new project or select an existing one.
+5.  Your API key will be generated. Copy the key.
+
 ## How to Run
 
 ### Prerequisites
