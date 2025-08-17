@@ -154,7 +154,6 @@ form-allowed-values:
     - Web Development Project Manager
     - Web Engineer
     - Web Producer
-    - Web Producers
     - Web Project Manager
     - Webmaster
   locations:
@@ -233,8 +232,6 @@ form-allowed-values:
     - Tailwind CSS
     - Bootstrap
     - Material-UI
-    - Swift
-    - Kotlin
     - Flutter
     - React Native
     - Xamarin
