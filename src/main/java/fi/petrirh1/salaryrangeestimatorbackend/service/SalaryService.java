@@ -6,17 +6,20 @@ import fi.petrirh1.salaryrangeestimatorbackend.model.SalaryRangeResponse;
 import fi.petrirh1.salaryrangeestimatorbackend.model.GeminiRequest;
 import fi.petrirh1.salaryrangeestimatorbackend.model.GeminiResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SalaryService {
 
     private final WebClient geminiWebClient;
+    private final ObjectMapper mapper;
 
     private final String SYSTEM_INSTRUCTIONS =
                  "Olet asiantuntija, joka arvioi palkkatasoa työmarkkinoilla Suomessa. " +
@@ -47,12 +50,10 @@ public class SalaryService {
                 .bodyToMono(GeminiResponse.class)
                 .block();
 
-        ObjectMapper mapper = new ObjectMapper();
-
         try {
             return mapper.readValue(parseGeminiText(response), SalaryRangeResponse.class);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Failed to parse JSON response from Gemini API. Response: '{}'", response, e);
             throw new IllegalStateException("No valid salary range data returned from Gemini API");
         }
     }

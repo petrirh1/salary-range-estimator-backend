@@ -1,5 +1,6 @@
 package fi.petrirh1.salaryrangeestimatorbackend.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fi.petrirh1.salaryrangeestimatorbackend.model.SalaryRangeRequest;
 import fi.petrirh1.salaryrangeestimatorbackend.model.SalaryRangeResponse;
 import okhttp3.mockwebserver.MockResponse;
@@ -46,7 +47,9 @@ class SalaryServiceTest {
                 .baseUrl(mockWebServer.url("/").toString())
                 .build();
 
-        salaryService = new SalaryService(webClient);
+        ObjectMapper mapper = new ObjectMapper();
+
+        salaryService = new SalaryService(webClient, mapper);
 
         request = new SalaryRangeRequest();
         request.setJobTitle("jobtitle");
