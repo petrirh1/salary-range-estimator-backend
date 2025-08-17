@@ -1,5 +1,6 @@
 package fi.petrirh1.salaryrangeestimatorbackend.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fi.petrirh1.salaryrangeestimatorbackend.model.SalaryRangeRequest;
 import fi.petrirh1.salaryrangeestimatorbackend.model.SalaryRangeResponse;
 import fi.petrirh1.salaryrangeestimatorbackend.model.GeminiRequest;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,33 +18,25 @@ public class SalaryService {
 
     private final WebClient geminiWebClient;
 
-//    private final String SYSTEM_INSTRUCTIONS_RESTRICTED = "Olet asiantuntija, joka arvioi palkkatasoa työmarkkinoilla Suomessa. " +
-//            "Käytä ajantasaisia tietoja työpaikkailmoituksista, palkkatilastoista ja toimialatiedoista, " +
-//            "kun arvioit palkkahaarukkaa. Palauta pelkkä palkkahaarukka.";
-
     private final String SYSTEM_INSTRUCTIONS =
-            "Olet asiantuntija, joka arvioi palkkatasoa työmarkkinoilla Suomessa. " +
-                    "Käytä ajantasaisia tietoja työpaikkailmoituksista, palkkatilastoista ja toimialatiedoista, kun arvioit palkkahaarukkaa. " +
-                    "Palauta vastaus seuraavassa muodossa: ensin pelkkä palkkahaarukka (ilman €/kk-merkintää), sitten puolipiste ';', ja sen jälkeen tiivistelmä Markdown-muodossa.\n\n" +
-                    "Tiivistelmässä:\n" +
-                    "- Käytä selkeitä otsikoita, lyhyitä kappaleita ja listauksia.\n" +
-                    "- Tiivistä olennaisin muutamaan napakkaan virkkeeseen.\n" +
-                    "- Korosta palkkaan vaikuttavia tekijöitä (esim. kokemus, teknologiat, toimiala, sijainti) erillisillä väliotsikoilla.\n" +
-                    "- Lisää lopuksi käytännön vinkkejä palkkaneuvotteluihin.\n" +
-                    "- Varmista, että puolipiste erottaa palkkahaarukan ja tiivistelmän selkeästi ohjelmallista käsittelyä varten.\n" +
-                    "- Kirjoita ammattimaisella, selkeällä ja sujuvalla kielellä ilman toistoa.\n\n" +
-                    "Esimerkki vastausmuodosta:\n" +
-                    "4000-5500;\n" +
-                    "**Palkka-arvio:**\n\n" +
-                    "Sovelluskehittäjän palkkahaarukka 4,5 vuoden kokemuksella on 4000–5500 euroa kuukaudessa.\n\n" +
-                    "**Palkkaan vaikuttavat tekijät:**\n" +
-                    "- **Kokemus:** Nostaa palkkaa lähes viiden vuoden kokemuksella.\n" +
-                    "- **Koulutustaso:** Koulutustaso saattaa vaikuttaa palkkaan merkittävästi.\n\n" +
-                    "- **Teknologiaosaaminen:** React, Java, Spring Boot ja Angular ovat arvostettuja taitoja.\n" +
-                    "- **Toimiala:** IT-konsultointi maksaa yleisesti hyvin.\n" +
-                    "- **Sijainti:** Etätyö ei merkittävästi laske palkkaa vahvalla osaamisella.\n\n" +
-                    "**Neuvotteluvinkkejä:**\n\n" +
-                    "Perustele palkkatoiveesi osaamisella ja kokemuksella. Korosta omaa arvoasi yritykselle palkkaneuvotteluissa.";
+                 "Olet asiantuntija, joka arvioi palkkatasoa työmarkkinoilla Suomessa. " +
+                 "Käytä ajantasaisia tietoja työpaikkailmoituksista, palkkatilastoista ja toimialatiedoista. " +
+                 "Palauta vastaus AINA JSON-muodossa. JSON-objektin tulee sisältää kaksi kenttää: " +
+                 "\"salaryRange\" (string) ja \"salaryAnalysis\" (string). " +
+                 "Älä lisää mitään muuta tekstiä vastaukseesi, ainoastaan JSON-objekti." +
+                 "\"salaryRange\" sisältää pelkän palkkahaarukan (esim. \"4000-5500\"). " +
+                 "\"salaryAnalysis\" sisältää yksityiskohtaisen analyysin Markdown-muodossa.\\n\\n" +
+                 "Analyysissä:\\n" +
+                 "- Käytä selkeitä otsikoita, lyhyitä kappaleita ja listauksia.\\n" +
+                 "- Korosta palkkaan vaikuttavia tekijöitä (esim. kokemus, teknologiat, sijainti) erillisillä väliotsikoilla.\\n" +
+                 "- Lisää lopuksi käytännön vinkkejä palkkaneuvotteluihin.\\n" +
+                 "- Kirjoita ammattimaisella ja selkeällä suomen kielellä.\\n\\n" +
+                 "Esimerkki JSON-vastauksesta:\\n" +
+                 "{\\n" +
+                 "  \"salaryRange\": \"4000-5500\",\\n" +
+                 "  \"salaryAnalysis\": \"**Palkka-arvio:**\\\\n\\\\nSovelluskehittäjän palkkahaarukka...\\\\n\\\\n**Palkkaan vaikuttavat tekijät:**\\\\n- **Kokemus:**...\\\\n\\\\n**Neuvotteluvinkkejä:**\\\\n...\"\\n" +
+                 "}";
+
 
     @Cacheable("salaryRangeResponse")
     public SalaryRangeResponse getSalaryRange(SalaryRangeRequest request) {
@@ -55,33 +47,26 @@ public class SalaryService {
                 .bodyToMono(GeminiResponse.class)
                 .block();
 
+        ObjectMapper mapper = new ObjectMapper();
 
-        String text = extractFirstCandidateText(response)
-                .orElseThrow(() -> new IllegalStateException("No valid salary range data returned from Gemini API"));
-
-        return parseSalaryRangeResponse(text);
+        try {
+            return mapper.readValue(parseGeminiText(response), SalaryRangeResponse.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new IllegalStateException("No valid salary range data returned from Gemini API");
+        }
     }
 
-    private Optional<String> extractFirstCandidateText(GeminiResponse response) {
-        if (response == null || response.getCandidates() == null || response.getCandidates().isEmpty()) {
-            return Optional.empty();
-        }
-
-        GeminiResponse.Candidate candidate = response.getCandidates().get(0);
-        if (candidate.getContent() == null || candidate.getContent().getParts() == null || candidate.getContent().getParts().isEmpty()) {
-            return Optional.empty();
-        }
-
-        return Optional.ofNullable(candidate.getContent().getParts().get(0).getText());
-    }
-
-    private SalaryRangeResponse parseSalaryRangeResponse(String text) {
-        String[] splitText = text.split(";", 2); // limit to avoid unexpected splits
-        if (splitText.length < 2) {
-            throw new IllegalArgumentException("Invalid salary range format: " + text);
-        }
-
-        return new SalaryRangeResponse(splitText[0].trim(), splitText[1].trim());
+    private String parseGeminiText(GeminiResponse response) {
+        return response
+                .getCandidates()
+                .getFirst()
+                .getContent()
+                .getParts()
+                .getFirst()
+                .getText()
+                .replaceAll("^```json\\s*", "")
+                .replaceAll("```$", "");
     }
 
     private GeminiRequest generateGeminiRequest(SalaryRangeRequest request) {
