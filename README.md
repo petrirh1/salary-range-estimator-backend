@@ -1,6 +1,6 @@
 # Salary Range Estimator Backend
 
-This project is a backend service that estimates salary ranges for software developers in Finland using Google's Gemini AI.
+This project is a backend service that estimates salary ranges for IT professionals in Finland using Google's Gemini AI.
 
 ## Features
 
