@@ -37,7 +37,7 @@ public class SalaryService {
                  "Esimerkki JSON-vastauksesta:\\n" +
                  "{\\n" +
                  "  \"salaryRange\": \"4000-5500\",\\n" +
-                 "  \"salaryAnalysis\": \"**Palkka-arvio:**\\\\n\\\\nSovelluskehittäjän palkkahaarukka...\\\\n\\\\n**Palkkaan vaikuttavat tekijät:**\\\\n- **Kokemus:**...\\\\n\\\\n**Neuvotteluvinkkejä:**\\\\n...\"\\n" +
+                 "  \"salaryAnalysis\": \"### Palkka-arvio\\\\n\\\\nSovelluskehittäjän palkkahaarukka...\\\\n\\\\n### Palkkaan vaikuttavat tekijät\\\\n- **Kokemus:**...\\\\n\\\\n### Neuvotteluvinkkejä\\\\n...\"\\n" +
                  "}";
 
 
