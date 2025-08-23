@@ -15,7 +15,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Void> handleValidationException(MethodArgumentNotValidException ex) {
         ex.getBindingResult().getFieldErrors()
-                .forEach(error -> log.warn("Validation failed: {} {}", error.getField(), error.getDefaultMessage()));
+                .forEach(error -> log.warn("Validation failed: {}", error.getDefaultMessage()));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
