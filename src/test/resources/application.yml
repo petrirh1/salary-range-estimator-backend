@@ -1,0 +1,42 @@
+cors:
+  allowed-origins:
+  allowed-methods:
+
+gemini:
+  base-url:
+  api-key:
+
+form-allowed-values:
+  job-titles:
+    - Software Architect
+    - Software Developer
+    - Software Development Engineer
+    - Software Development Manager
+    - Software Engineer
+  locations:
+    - Etätyö
+    - Helsinki
+    - Espoo
+    - Tampere
+  industries:
+    - Ohjelmistokehitys
+    - IT-konsultointi
+    - Verkkopalvelut ja web-kehitys
+    - Kyberturvallisuus
+    - Pilvipalvelut (Cloud Computing)
+    - IT-tuki ja ylläpito
+    - Tekoäly ja koneoppiminen
+  educations:
+    - Peruskoulu
+    - Ammatillinen perustutkinto
+    - Ylioppilas
+    - Ammattikorkeakoulututkinto
+    - Yliopistotutkinto
+    - Tohtorintutkinto
+  technologies:
+    - Java
+    - Node.js
+    - JavaScript
+    - TypeScript
+    - React
+    - Spring Boot

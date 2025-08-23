@@ -15,7 +15,7 @@ public class TechnologyValidator implements ConstraintValidator<ValidTechnology,
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        if (value == null || value.isBlank()) return true;
+        if (value == null) return true;
         return formAllowedValuesConfig.getTechnologies().contains(value);
     }
 }

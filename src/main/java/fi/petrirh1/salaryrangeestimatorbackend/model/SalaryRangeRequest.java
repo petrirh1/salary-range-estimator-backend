@@ -1,7 +1,8 @@
 package fi.petrirh1.salaryrangeestimatorbackend.model;
 
 import fi.petrirh1.salaryrangeestimatorbackend.validation.annotations.*;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -11,17 +12,19 @@ import java.util.List;
 @Data
 public class SalaryRangeRequest {
 
-    @NotBlank
+    @NotNull
     @ValidJobTitle
     private String jobTitle;
 
+    @Min(0)
+    @Max(60)
     @NotNull
     private Double experience;
 
     @ValidEducation
     private String education;
 
-    @NotBlank
+    @NotNull
     @ValidIndustry
     private String industry;
 
@@ -32,6 +35,8 @@ public class SalaryRangeRequest {
     @NotEmpty
     private List<@ValidTechnology String> technologies;
 
+    @Min(0)
+    @Max(16_000)
     private Double currentSalary;
 
 }
