@@ -30,6 +30,15 @@ class SalaryRangeRequestTest {
         return request;
     }
 
+    private SalaryRangeRequest validRequestWithRequiredFields() {
+        SalaryRangeRequest request = new SalaryRangeRequest();
+        request.setJobTitle("Software Developer");
+        request.setExperience(5.0);
+        request.setIndustry("Ohjelmistokehitys");
+        request.setTechnologies(List.of("Java", "React"));
+        return request;
+    }
+
     private void assertSingleViolation(SalaryRangeRequest request, String expectedMessage) {
         Set<ConstraintViolation<SalaryRangeRequest>> violations = validator.validate(request);
         assertEquals(1, violations.size());
@@ -39,6 +48,11 @@ class SalaryRangeRequestTest {
     @Test
     void validRequestShouldHaveNoViolations() {
         assertTrue(validator.validate(validRequest()).isEmpty());
+    }
+
+    @Test
+    void validRequestWithRequiredFieldsShouldHaveNoViolations() {
+        assertTrue(validator.validate(validRequestWithRequiredFields()).isEmpty());
     }
 
     /* Job Title */
@@ -142,8 +156,10 @@ class SalaryRangeRequestTest {
                 .collect(Collectors.toSet());
 
         assertEquals(2, violations.size());
-        assertTrue(messages.contains("must not be null"));
-        assertTrue(messages.contains("must not be empty"));
+        assertAll(
+                () -> assertTrue(messages.contains("must not be null")),
+                () -> assertTrue(messages.contains("must not be empty"))
+        );
     }
 
     /* Current Salary */
