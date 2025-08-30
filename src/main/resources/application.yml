@@ -8,7 +8,7 @@ server:
 
 cors:
   allowed-origins: ${ALLOWED_ORIGINS:http://localhost:5173}
-  allowed-methods: ${ALLOWED_METHODS:GET,POST}
+  allowed-methods: ${ALLOWED_METHODS:GET,POST,OPTIONS}
 
 gemini:
   base-url: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
