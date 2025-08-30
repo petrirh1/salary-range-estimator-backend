@@ -1,0 +1,319 @@
+spring:
+  application:
+    name: compensation-range-estimator-backend
+
+server:
+  error:
+    include-message: never
+
+cors:
+  allowed-origins: ${ALLOWED_ORIGINS:http://localhost:5173}
+  allowed-methods: ${ALLOWED_METHODS:GET,POST}
+
+gemini:
+  base-url: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
+  api-key: ${GEMINI_API_KEY}
+
+form-allowed-values:
+  job-titles:
+    - AI Data Curator
+    - AI Ethics Specialist
+    - AI Model Trainer
+    - AI Product Manager
+    - AI Research Scientist
+    - AI Solutions Architect
+    - AI Systems Reliability Engineer
+    - Application Designer
+    - Application Developer
+    - Application Engineer
+    - Application Support Analyst
+    - Artificial Intelligence Engineer
+    - Business Systems Analyst
+    - Chief Information Officer (CIO)
+    - Chief Technology Officer (CTO)
+    - Cloud Architect
+    - Cloud Computing Engineer
+    - Cloud Consultant
+    - Cloud Engineer
+    - Cloud Product Manager
+    - Cloud Services Developer
+    - Cloud Services Provider
+    - Cloud System Administrator
+    - Cloud Systems Engineer
+    - Computer And Information Research Manager
+    - Computer And Information Research Scientist
+    - Computer Data Scientist
+    - Computer Forensic Investigator
+    - Computer Network Specialist
+    - Computer Operator
+    - Computer Programmer
+    - Computer Support Specialist
+    - Computer Support Technician
+    - Computer Systems Analyst
+    - Computer Technician
+    - Computer Vision Engineer
+    - Cyber Security Manager
+    - Cyber Security Specialist
+    - Data Architect
+    - Data Modeler
+    - Data Quality Manager
+    - Data Scientist
+    - Database Administrator
+    - Database Analyst
+    - Database Coordinator
+    - Database Developer
+    - Database Engineer
+    - Database Manager
+    - Database Specialist
+    - Deep Learning Engineer
+    - Desktop Support Specialist
+    - Devops Engineer
+    - Director Of Technology
+    - Frameworks Specialist
+    - Front-End Designer
+    - Front-End Developer
+    - Full-Stack Developer
+    - Game Developer
+    - Generative AI Engineer
+    - Help Desk Analyst
+    - Help Desk Support
+    - Help Desk Technician
+    - Help Desk Worker
+    - Information Architect
+    - Information Management Systems Director
+    - Information Security Analyst
+    - Information Security Consultant
+    - Information Security Engineer
+    - Information Security Manager
+    - Information Security Program Manager
+    - Information Security Project Manager
+    - Information Security Specialist
+    - Information Technology Analyst
+    - Information Technology Leadership
+    - Interaction Designer
+    - Internet Engineer
+    - Iteration Manager
+    - It Coordinator
+    - It Director
+    - It Manager
+    - It Project Manager
+    - It Sales Director
+    - It Sales Executive
+    - It Security Analyst
+    - It Support Specialist
+    - It Technician
+    - Large Language Model Engineer
+    - Lead Programmer
+    - Machine Learning Engineer
+    - Management Information Director
+    - Mobile Developer
+    - Multimedia Architect
+    - Natural Language Processing (NLP) Engineer
+    - Network Administrator
+    - Network Analyst
+    - Network Architect
+    - Network Engineer
+    - Network Infrastructure Specialist
+    - Network Operations Engineer
+    - Network Reliability Engineer
+    - Network Security Engineer
+    - Network Technician
+    - Operations Analyst
+    - Problem Manager
+    - Prompt Engineer
+    - Prompt Optimization Specialist
+    - Reinforcement Learning Researcher
+    - Responsible AI Lead
+    - Search Engine Optimization (SEO) Consultant
+    - Security Specialist
+    - Senior It Consultant
+    - Senior Systems Analyst
+    - Seo Manager
+    - Software Architect
+    - Software Developer
+    - Software Development Engineer
+    - Software Development Manager
+    - Software Engineer
+    - Software Test Engineer
+    - Solutions Architect
+    - Speech Recognition Engineer
+    - Support Specialist
+    - Systems Analyst
+    - Systems Designer
+    - Technical Account Manager
+    - Technical Assistance Specialist
+    - Technical Lead
+    - Technical Operations Officer
+    - Technical Specialist
+    - Technical Support
+    - Technology Assistant
+    - Technology Manager
+    - Technology Sales Consultant
+    - Technology Specialist
+    - User Experience (UX) Designer
+    - User Interface (UI) Designer
+    - Ux/Ui Researcher
+    - Ux/Ui Specialist
+    - Web Analytics Developer
+    - Web Content Manager
+    - Web Designer
+    - Web Developer
+    - Web Development Manager
+    - Web Development Project Manager
+    - Web Engineer
+    - Web Producer
+    - Web Project Manager
+    - Webmaster
+  locations:
+    - Etätyö
+    - Helsinki
+    - Espoo
+    - Tampere
+    - Vantaa
+    - Oulu
+    - Turku
+    - Jyväskylä
+    - Lahti
+    - Kuopio
+    - Kouvola
+    - Pori
+    - Joensuu
+    - Lappeenranta
+    - Hämeenlinna
+    - Vaasa
+    - Rovaniemi
+    - Seinäjoki
+    - Mikkeli
+    - Kotka
+    - Salo
+    - Porvoo
+    - Hyvinkää
+    - Järvenpää
+    - Kaarina
+    - Nurmijärvi
+    - Riihimäki
+    - Kerava
+    - Kemi
+    - Kajaani
+    - Savonlinna
+  industries:
+    - Ohjelmistokehitys
+    - IT-konsultointi
+    - Verkkopalvelut ja web-kehitys
+    - Kyberturvallisuus
+    - Pilvipalvelut (Cloud Computing)
+    - IT-tuki ja ylläpito
+    - Tekoäly ja koneoppiminen
+  educations:
+    - Peruskoulu
+    - Ammatillinen perustutkinto
+    - Ylioppilas
+    - Ammattikorkeakoulututkinto
+    - Yliopistotutkinto
+    - Tohtorintutkinto
+  technologies:
+    - Python
+    - Java
+    - C
+    - C++
+    - C#
+    - Go
+    - Rust
+    - Kotlin
+    - Swift
+    - Ruby
+    - Node.js
+    - JavaScript
+    - TypeScript
+    - React
+    - Next.js
+    - Angular
+    - Vue.js
+    - Svelte
+    - Django
+    - Flask
+    - Spring
+    - Spring Boot
+    - .NET
+    - Laravel
+    - Express.js
+    - Tailwind CSS
+    - Bootstrap
+    - Material-UI
+    - Flutter
+    - React Native
+    - Xamarin
+    - Cordova
+    - MySQL
+    - PostgreSQL
+    - Oracle Database
+    - Microsoft SQL Server
+    - MongoDB
+    - Cassandra
+    - Redis
+    - CouchDB
+    - Git
+    - GitHub
+    - Bitbucket
+    - SVN
+    - Mercurial
+    - Jenkins
+    - GitLab CI
+    - CircleCI
+    - Travis CI
+    - Azure DevOps
+    - Selenium
+    - JUnit
+    - PyTest
+    - Cypress
+    - Postman
+    - AWS
+    - Microsoft Azure
+    - Google Cloud Platform
+    - IBM Cloud
+    - Oracle Cloud
+    - Docker
+    - Kubernetes
+    - OpenShift
+    - Nginx
+    - Apache
+    - HAProxy
+    - Ansible
+    - Puppet
+    - Chef
+    - Terraform
+    - Prometheus
+    - Grafana
+    - ELK Stack
+    - Datadog
+    - New Relic
+    - SSL/TLS
+    - AES
+    - RSA
+    - SHA-256
+    - OAuth
+    - OpenID Connect
+    - SAML
+    - LDAP
+    - Wireshark
+    - Metasploit
+    - Nessus
+    - Nmap
+    - TensorFlow
+    - PyTorch
+    - Keras
+    - Scikit-learn
+    - Pandas
+    - NumPy
+    - Matplotlib
+    - Seaborn
+    - GPT
+    - BERT
+    - spaCy
+    - Hugging Face Transformers
+    - Unity
+    - Unreal Engine
+    - WebXR
+    - Mendix
+    - OutSystems
+    - PowerApps
