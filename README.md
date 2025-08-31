@@ -37,12 +37,12 @@ Backend service for the [salary-range-estimator](https://github.com/petrirh1/sal
     ```bash
     git clone https://github.com/petrirh1/salary-range-estimator-backend.git
     ```
-2.  Set up the Gemini API key in `application-dev.yml`:
+2.  Set up the Gemini API key in `application.yml`:
     ```yaml
     gemini:
        api-key: your-api-key
     ```
 3. Run the application with dev-profile:
     ```bash
-    ./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
+    ./mvnw spring-boot:run
     ```
