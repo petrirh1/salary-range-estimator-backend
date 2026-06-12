@@ -80,8 +80,9 @@ public class SalaryService {
 
         if (!analysis.contains("### Palkka-arvio") ||
                 !analysis.contains("### Palkkaan vaikuttavat tekijät") ||
+                !analysis.contains("### Epävarmuustekijät") ||
                 !analysis.contains("### Neuvotteluvinkkejä")) {
-            throw new IllegalStateException("Invalid structure");
+            throw new IllegalStateException("Invalid analysis structure");
         }
     }
 
