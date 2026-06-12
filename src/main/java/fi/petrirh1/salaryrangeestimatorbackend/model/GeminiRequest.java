@@ -18,6 +18,9 @@ public class GeminiRequest {
     @JsonProperty("system_instruction")
     private SystemInstruction systemInstruction;
 
+    @JsonProperty("generationConfig")
+    private GenerationConfig generationConfig;
+
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
@@ -43,5 +46,17 @@ public class GeminiRequest {
 
         @JsonProperty("parts")
         private List<Part> parts;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class GenerationConfig {
+
+        @JsonProperty("responseMimeType")
+        private String responseMimeType;
+
+        @JsonProperty("temperature")
+        private Double temperature;
     }
 }

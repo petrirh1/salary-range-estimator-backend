@@ -22,23 +22,36 @@ public class SalaryService {
     private final ObjectMapper mapper;
 
     private final String SYSTEM_INSTRUCTIONS =
-                 "Olet asiantuntija, joka arvioi palkkatasoa työmarkkinoilla Suomessa. " +
-                 "Käytä ajantasaisia tietoja työpaikkailmoituksista, palkkatilastoista ja toimialatiedoista. " +
-                 "Palauta vastaus AINA JSON-muodossa. JSON-objektin tulee sisältää kaksi kenttää: " +
-                 "\"salaryRange\" (string) ja \"salaryAnalysis\" (string). " +
-                 "Älä lisää mitään muuta tekstiä vastaukseesi, ainoastaan JSON-objekti." +
-                 "\"salaryRange\" sisältää pelkän palkkahaarukan (esim. \"4000-5500\"). " +
-                 "\"salaryAnalysis\" sisältää yksityiskohtaisen analyysin Markdown-muodossa.\\n\\n" +
-                 "Analyysissä:\\n" +
-                 "- Käytä selkeitä otsikoita, lyhyitä kappaleita ja listauksia.\\n" +
-                 "- Korosta palkkaan vaikuttavia tekijöitä (esim. kokemus, teknologiat, sijainti) erillisillä väliotsikoilla.\\n" +
-                 "- Lisää lopuksi käytännön vinkkejä palkkaneuvotteluihin.\\n" +
-                 "- Kirjoita ammattimaisella ja selkeällä suomen kielellä.\\n\\n" +
-                 "Esimerkki JSON-vastauksesta:\\n" +
-                 "{\\n" +
-                 "  \"salaryRange\": \"4000-5500\",\\n" +
-                 "  \"salaryAnalysis\": \"### Palkka-arvio\\\\n\\\\nSovelluskehittäjän palkkahaarukka...\\\\n\\\\n### Palkkaan vaikuttavat tekijät\\\\n- **Kokemus:**...\\\\n\\\\n### Neuvotteluvinkkejä\\\\n...\"\\n" +
-                 "}";
+                    "Olet asiantuntija, joka arvioi palkkatasoa työmarkkinoilla Suomessa. " +
+                    "Perusta arvio yleiseen markkinaymmärrykseen Suomen palkkatasosta, eri ammattien tyypillisistä palkkahaarukoista ja yleisistä toimialatrendeistä. " +
+                    "Älä väitä käyttäväsi reaaliaikaista tai haettua dataa työpaikkailmoituksista tai palkkatilastoista. " +
+                    "Älä keksi tarkkoja lähdeviittauksia tai viittaa yksittäisiin tietokantoihin. " +
+
+                    "Palauta vastaus AINA JSON-muodossa. JSON-objektin tulee sisältää kolme kenttää: " +
+                    "\"salaryRange\" (string), \"salaryAnalysis\" (string) ja \"confidence\" (string). " +
+
+                    "Älä lisää mitään muuta tekstiä vastaukseesi, ainoastaan JSON-objekti. " +
+
+                    "\"salaryRange\" sisältää palkkahaarukan muodossa \"X-Y €/kk\". " +
+
+                    "\"salaryAnalysis\" sisältää yksityiskohtaisen analyysin Markdown-muodossa.\\n\\n" +
+                    "Analyysissä:\\n" +
+                    "- Käytä selkeitä otsikoita, lyhyitä kappaleita ja listauksia.\\n" +
+                    "- Korosta palkkaan vaikuttavia tekijöitä (esim. kokemus, teknologiat, sijainti).\\n" +
+                    "- Erota selkeästi arviot ja epävarmuustekijät.\\n" +
+                    "- Lisää lopuksi käytännön vinkkejä palkkaneuvotteluihin.\\n" +
+                    "- Kirjoita ammattimaisella ja selkeällä suomen kielellä.\\n\\n" +
+
+                    "\"confidence\" sisältää arvion varmuudesta: low, medium tai high.\\n\\n" +
+
+                    "Jos syötetiedot ovat puutteellisia tai epätarkkoja, käytä laajempaa palkkahaarukkaa ja laske confidence-tasoa.\\n\\n" +
+
+                    "Esimerkki JSON-vastauksesta:\\n" +
+                    "{\\n" +
+                    "  \"salaryRange\": \"4000-5500 €/kk\",\\n" +
+                    "  \"salaryAnalysis\": \"### Palkka-arvio\\\\n\\\\nSovelluskehittäjän palkkahaarukka Suomessa...\\\\n\\\\n### Palkkaan vaikuttavat tekijät\\\\n- **Kokemus:**...\\\\n\\\\n### Epävarmuustekijät\\\\n- Markkinavaihtelu...\\\\n\\\\n### Neuvotteluvinkkejä\\\\n...\",\\n" +
+                    "  \"confidence\": \"medium\"\\n" +
+                    "}";
 
 
     @Cacheable("salaryRangeResponse")
@@ -51,10 +64,24 @@ public class SalaryService {
                 .block();
 
         try {
-            return mapper.readValue(parseGeminiText(response), SalaryRangeResponse.class);
+            SalaryRangeResponse salaryRangeResponse = mapper.readValue(parseGeminiText(response), SalaryRangeResponse.class);
+            validateAnalysis(salaryRangeResponse.getSalaryAnalysis());
+            return salaryRangeResponse;
         } catch (Exception e) {
             log.error("Failed to parse JSON response from Gemini API. Response: '{}'", response, e);
             throw new IllegalStateException("No valid salary range data returned from Gemini API");
+        }
+    }
+
+    private void validateAnalysis(String analysis) {
+        if (analysis == null || analysis.isBlank()) {
+            throw new IllegalStateException("Empty analysis");
+        }
+
+        if (!analysis.contains("### Palkka-arvio") ||
+                !analysis.contains("### Palkkaan vaikuttavat tekijät") ||
+                !analysis.contains("### Neuvotteluvinkkejä")) {
+            throw new IllegalStateException("Invalid structure");
         }
     }
 
@@ -79,10 +106,13 @@ public class SalaryService {
         GeminiRequest.Part systemPart = new GeminiRequest.Part(SYSTEM_INSTRUCTIONS);
         GeminiRequest.SystemInstruction systemInstruction =
                 new GeminiRequest.SystemInstruction("system", List.of(systemPart));
+        GeminiRequest.GenerationConfig generationConfig =
+                new GeminiRequest.GenerationConfig("application/json", 0.1);
 
         return new GeminiRequest(
                 List.of(content),
-                systemInstruction
+                systemInstruction,
+                generationConfig
         );
     }
 
