@@ -1,7 +1,7 @@
 package fi.petrirh1.salaryrangeestimatorbackend.validation.validators;
 
 
-import fi.petrirh1.salaryrangeestimatorbackend.config.FormAllowedValuesConfig;
+import fi.petrirh1.salaryrangeestimatorbackend.config.ValidFormValuesConfig;
 import fi.petrirh1.salaryrangeestimatorbackend.validation.annotations.ValidJobTitle;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class JobTitleValidator implements ConstraintValidator<ValidJobTitle, String> {
 
-    private final FormAllowedValuesConfig formAllowedValuesConfig;
+    private final ValidFormValuesConfig validFormValuesConfig;
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (value == null) return true;
-        return formAllowedValuesConfig.getJobTitles().contains(value);
+        return validFormValuesConfig.getJobTitles().contains(value);
     }
 }

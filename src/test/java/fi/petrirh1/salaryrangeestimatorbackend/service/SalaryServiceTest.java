@@ -1,6 +1,7 @@
 package fi.petrirh1.salaryrangeestimatorbackend.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fi.petrirh1.salaryrangeestimatorbackend.model.GeminiResponse;
 import fi.petrirh1.salaryrangeestimatorbackend.model.SalaryRangeRequest;
 import fi.petrirh1.salaryrangeestimatorbackend.model.SalaryRangeResponse;
 import okhttp3.mockwebserver.MockResponse;
@@ -21,22 +22,85 @@ class SalaryServiceTest {
     private SalaryService salaryService;
     private SalaryRangeRequest request;
 
-    private String body = "{"
-            + "\"candidates\":[{"
-            + "\"content\":{\"parts\":[{\"text\":\"```json\\n{\\n  \\\"salaryRange\\\": \\\"4200-5800\\\",\\n  \\\"salaryAnalysis\\\": \\\"**Palkka-arvio:**\\\\n\\\\nFullstack Software Developerin palkka...\\\"\\n}\\n```\"}],"
-            + "\"role\":\"model\"},"
-            + "\"finishReason\":\"STOP\","
-            + "\"avgLogprobs\":-0.19425356590141685"
-            + "}],"
-            + "\"usageMetadata\":{"
-            + "\"promptTokenCount\":553,"
-            + "\"candidatesTokenCount\":472,"
-            + "\"totalTokenCount\":1025,"
-            + "\"promptTokensDetails\":[{\"modality\":\"TEXT\",\"tokenCount\":553}],"
-            + "\"candidatesTokensDetails\":[{\"modality\":\"TEXT\",\"tokenCount\":472}]},"
-            + "\"modelVersion\":\"gemini-2.0-flash\","
-            + "\"responseId\":\"lnahaNTxKY6xmNAPjJTUqAw\""
-            + "}";
+    private String createBody(String salaryRange, String salaryAnalysis) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+
+            SalaryRangeResponse salary = new SalaryRangeResponse();
+            salary.setSalaryRange(salaryRange);
+            salary.setSalaryAnalysis(salaryAnalysis);
+
+            String innerJson = mapper.writeValueAsString(salary);
+
+            GeminiResponse.Part part = new GeminiResponse.Part(
+                    "```json\n" + innerJson + "\n```"
+            );
+
+            GeminiResponse.Content content = new GeminiResponse.Content(
+                    List.of(part),
+                    "model"
+            );
+
+            GeminiResponse.Candidate candidate = new GeminiResponse.Candidate(
+                    content,
+                    "STOP",
+                    -0.19425356590141685
+            );
+
+            GeminiResponse.UsageMetadata usage = new GeminiResponse.UsageMetadata(
+                    553,
+                    472,
+                    1025,
+                    List.of(),
+                    List.of()
+            );
+
+            GeminiResponse response = new GeminiResponse(
+                    List.of(candidate),
+                    usage,
+                    "gemini-2.0-flash",
+                    "test-id"
+            );
+
+            return mapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to build mock body", e);
+        }
+    }
+
+    private String validSalaryRange() {
+        return "4200-5000";
+    }
+
+    private String invalidSalaryRange() {
+        return "4200-";
+    }
+
+    private String emptySalaryRange() {
+        return "";
+    }
+
+    private String validAnalysis() {
+        return """
+            ### Palkka-arvio 
+            ### Palkkaan vaikuttavat tekijät 
+            ### Epävarmuustekijät 
+            ### Neuvotteluvinkkejä
+            """;
+    }
+
+    private String invalidAnalysis() {
+        return """
+            ### Palkka-arvio 
+            ### Palkkaan vaikuttavat tekijät 
+            ### Epävarmuustekijät 
+            """;
+    }
+
+    private String emptyAnalysis() {
+        return "";
+    }
 
     @BeforeEach
     void setUp() throws Exception {
@@ -67,12 +131,11 @@ class SalaryServiceTest {
     @Test
     void getSalaryRange() {
         mockWebServer.enqueue(new MockResponse()
-                .setBody(body)
+                .setBody(createBody(validSalaryRange(), validAnalysis()))
                 .addHeader("Content-Type", "application/json"));
 
         SalaryRangeResponse response = salaryService.getSalaryRange(request);
         assertThat(response.getSalaryRange()).isEqualTo("4200-5800");
-        assertThat(response.getSalaryAnalysis()).contains("Fullstack Software Developerin palkka...");
     }
 
     @Test
@@ -86,5 +149,61 @@ class SalaryServiceTest {
         );
 
         assertEquals("No valid salary range data returned from Gemini API", exception.getMessage());
+    }
+
+    @Test
+    void getSalaryRangeWhenEmptyAnalysis() {
+        mockWebServer.enqueue(new MockResponse()
+                .setBody(createBody(validSalaryRange(), emptyAnalysis()))
+                .addHeader("Content-Type", "application/json"));
+
+        IllegalStateException exception = assertThrows(
+                IllegalStateException.class,
+                () -> salaryService.getSalaryRange(request)
+        );
+
+        assertEquals("Empty analysis", exception.getMessage());
+    }
+
+    @Test
+    void getSalaryRangeWhenInvalidAnalysis() {
+        mockWebServer.enqueue(new MockResponse()
+                .setBody(createBody(validSalaryRange(), invalidAnalysis()))
+                .addHeader("Content-Type", "application/json"));
+
+        IllegalStateException exception = assertThrows(
+                IllegalStateException.class,
+                () -> salaryService.getSalaryRange(request)
+        );
+
+        assertEquals("Invalid analysis structure", exception.getMessage());
+    }
+
+    @Test
+    void getSalaryRangeWhenInvalidSalaryRange() {
+        mockWebServer.enqueue(new MockResponse()
+                .setBody(createBody(invalidSalaryRange(), validAnalysis()))
+                .addHeader("Content-Type", "application/json"));
+
+        IllegalStateException exception = assertThrows(
+                IllegalStateException.class,
+                () -> salaryService.getSalaryRange(request)
+        );
+
+        assertEquals("Invalid salary range", exception.getMessage());
+    }
+
+    @Test
+    void getSalaryRangeWhenEmptySalaryRange() {
+        mockWebServer.enqueue(new MockResponse()
+                .setBody(createBody(emptySalaryRange(), validAnalysis()))
+                .addHeader("Content-Type", "application/json"));
+
+        IllegalStateException exception = assertThrows(
+                IllegalStateException.class,
+                () -> salaryService.getSalaryRange(request)
+        );
+
+        assertEquals("Empty salary range", exception.getMessage());
     }
 }

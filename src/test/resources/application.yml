@@ -6,7 +6,7 @@ gemini:
   base-url:
   api-key:
 
-form-allowed-values:
+valid-form-values:
   job-titles:
     - Software Architect
     - Software Developer

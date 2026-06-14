@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @Builder
 @AllArgsConstructor
-public class FormAllowedValuesResponse {
+public class ValidFormValuesResponse {
 
     private List<String> jobTitles;
     private List<String> locations;

@@ -8,8 +8,8 @@ import java.util.List;
 
 @Data
 @Component
-@ConfigurationProperties(prefix = "form-allowed-values")
-public class FormAllowedValuesConfig {
+@ConfigurationProperties(prefix = "valid-form-values")
+public class ValidFormValuesConfig {
 
     private List<String> jobTitles;
     private List<String> locations;

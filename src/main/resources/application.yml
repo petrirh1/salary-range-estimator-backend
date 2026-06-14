@@ -11,10 +11,10 @@ cors:
   allowed-methods: ${ALLOWED_METHODS:GET,POST,OPTIONS}
 
 gemini:
-  base-url: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
+  base-url: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
   api-key: ${GEMINI_API_KEY}
 
-form-allowed-values:
+valid-form-values:
   job-titles:
     - AI Data Curator
     - AI Ethics Specialist

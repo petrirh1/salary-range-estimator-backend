@@ -16,9 +16,9 @@
         </resources>
     </cache>
 
-    <cache alias="formAllowedValues">
+    <cache alias="validFormValues">
         <key-type>org.springframework.cache.interceptor.SimpleKey</key-type>
-        <value-type>fi.petrirh1.salaryrangeestimatorbackend.config.FormAllowedValuesConfig</value-type>
+        <value-type>fi.petrirh1.salaryrangeestimatorbackend.config.ValidFormValuesConfig</value-type>
         <expiry>
             <ttl unit="minutes">240</ttl>
         </expiry>

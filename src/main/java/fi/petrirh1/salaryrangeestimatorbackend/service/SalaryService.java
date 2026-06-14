@@ -1,5 +1,6 @@
 package fi.petrirh1.salaryrangeestimatorbackend.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fi.petrirh1.salaryrangeestimatorbackend.model.SalaryRangeRequest;
 import fi.petrirh1.salaryrangeestimatorbackend.model.SalaryRangeResponse;
@@ -63,13 +64,30 @@ public class SalaryService {
                 .bodyToMono(GeminiResponse.class)
                 .block();
 
+        if (response == null || parseGeminiText(response) == null || parseGeminiText(response).isBlank()) {
+            throw new IllegalStateException("No valid salary range data returned from Gemini API");
+        }
+
         try {
             SalaryRangeResponse salaryRangeResponse = mapper.readValue(parseGeminiText(response), SalaryRangeResponse.class);
+            validateSalaryRange(salaryRangeResponse.getSalaryRange());
             validateAnalysis(salaryRangeResponse.getSalaryAnalysis());
+
             return salaryRangeResponse;
-        } catch (Exception e) {
+        } catch (JsonProcessingException e) {
             log.error("Failed to parse JSON response from Gemini API. Response: '{}'", response, e);
-            throw new IllegalStateException("No valid salary range data returned from Gemini API");
+            throw new IllegalStateException("No valid salary range data returned from Gemini API", e);
+        }
+    }
+
+    private void validateSalaryRange(String salaryRange) {
+        if (salaryRange == null || salaryRange.isBlank()) {
+            throw new IllegalStateException("Empty salary range");
+        }
+
+        boolean validSalaryRange = salaryRange.matches("\\d+-\\d+");
+        if (!validSalaryRange) {
+            throw new IllegalStateException("Invalid salary range");
         }
     }
 

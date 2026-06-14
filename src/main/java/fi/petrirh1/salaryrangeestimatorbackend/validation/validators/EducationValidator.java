@@ -1,6 +1,6 @@
 package fi.petrirh1.salaryrangeestimatorbackend.validation.validators;
 
-import fi.petrirh1.salaryrangeestimatorbackend.config.FormAllowedValuesConfig;
+import fi.petrirh1.salaryrangeestimatorbackend.config.ValidFormValuesConfig;
 import fi.petrirh1.salaryrangeestimatorbackend.validation.annotations.ValidEducation;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class EducationValidator implements ConstraintValidator<ValidEducation, String> {
 
-    private final FormAllowedValuesConfig formAllowedValuesConfig;
+    private final ValidFormValuesConfig validFormValuesConfig;
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (value == null) return true;
-        return formAllowedValuesConfig.getEducations().contains(value);
+        return validFormValuesConfig.getEducations().contains(value);
     }
 }
