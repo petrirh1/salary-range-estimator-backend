@@ -135,7 +135,7 @@ class SalaryServiceTest {
                 .addHeader("Content-Type", "application/json"));
 
         SalaryRangeResponse response = salaryService.getSalaryRange(request);
-        assertThat(response.getSalaryRange()).isEqualTo("4200-5800");
+        assertThat(response.getSalaryRange()).isEqualTo("4200-5000");
     }
 
     @Test

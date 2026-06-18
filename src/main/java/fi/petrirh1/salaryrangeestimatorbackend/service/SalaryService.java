@@ -85,7 +85,7 @@ public class SalaryService {
             throw new IllegalStateException("Empty salary range");
         }
 
-        boolean validSalaryRange = salaryRange.matches("\\d+-\\d+");
+        boolean validSalaryRange = salaryRange.matches("^\\d+-\\d+(?:\\s?€\\/kk)?$");
         if (!validSalaryRange) {
             throw new IllegalStateException("Invalid salary range");
         }
