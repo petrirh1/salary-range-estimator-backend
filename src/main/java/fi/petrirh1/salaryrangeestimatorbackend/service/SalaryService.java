@@ -33,7 +33,7 @@ public class SalaryService {
 
                     "Älä lisää mitään muuta tekstiä vastaukseesi, ainoastaan JSON-objekti. " +
 
-                    "\"salaryRange\" sisältää palkkahaarukan muodossa \"X-Y €/kk\". " +
+                    "\"salaryRange\" sisältää palkkahaarukan muodossa \"X-Y\". " +
 
                     "\"salaryAnalysis\" sisältää yksityiskohtaisen analyysin Markdown-muodossa.\\n\\n" +
                     "Analyysissä:\\n" +
@@ -49,7 +49,7 @@ public class SalaryService {
 
                     "Esimerkki JSON-vastauksesta:\\n" +
                     "{\\n" +
-                    "  \"salaryRange\": \"4000-5500 €/kk\",\\n" +
+                    "  \"salaryRange\": \"4000-5500\",\\n" +
                     "  \"salaryAnalysis\": \"### Palkka-arvio\\\\n\\\\nSovelluskehittäjän palkkahaarukka Suomessa...\\\\n\\\\n### Palkkaan vaikuttavat tekijät\\\\n- **Kokemus:**...\\\\n\\\\n### Epävarmuustekijät\\\\n- Markkinavaihtelu...\\\\n\\\\n### Neuvotteluvinkkejä\\\\n...\",\\n" +
                     "  \"confidence\": \"medium\"\\n" +
                     "}";
@@ -85,7 +85,7 @@ public class SalaryService {
             throw new IllegalStateException("Empty salary range");
         }
 
-        boolean validSalaryRange = salaryRange.matches("^\\d+-\\d+(?:\\s?€\\/kk)?$");
+        boolean validSalaryRange = salaryRange.matches("^\\d+-\\d+$");
         if (!validSalaryRange) {
             throw new IllegalStateException("Invalid salary range");
         }
