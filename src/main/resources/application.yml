@@ -1,6 +1,6 @@
 spring:
   application:
-    name: compensation-range-estimator-backend
+    name: salary-range-estimator-backend
 
 server:
   error:
