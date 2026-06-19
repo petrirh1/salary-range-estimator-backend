@@ -42,7 +42,7 @@ Backend service for the [salary-range-estimator](https://github.com/petrirh1/sal
     gemini:
        api-key: your-api-key
     ```
-3. Run the application with dev-profile:
+3. Run the application:
     ```bash
     ./mvnw spring-boot:run
     ```
